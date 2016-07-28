@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-class App extends Component {
-  constructor(props) {
-    super(props)
+export default class App extends Component {
+  // constructor (props) {
+  //   super(props)
+  // }
+
+  componentDidMount () {
   }
 
-  componentDidMount() {
+  componentWillReceiveProps (nextProps) {
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
-  render() {
+  render () {
     const time = Date.now()
     return (
       <div>
@@ -25,9 +25,6 @@ class App extends Component {
 App.propTypes = {
 }
 
-function mapStateToProps(state) {
-
+function mapStateToProps (state) {
   return {}
 }
-
-export default App
