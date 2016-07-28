@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 
 import {
   addLift,
-  addFloor
+  addFloor,
+  toggleCall
 } from '../../redux/actions'
 
 class App extends Component {
@@ -12,16 +13,7 @@ class App extends Component {
   // }
 
   componentDidMount () {
-    const { dispatch } = this.props
-
-    window.globs = {
-      addLift: () => {
-        dispatch(addLift())
-      },
-      addFloor: () => {
-        dispatch(addFloor())
-      }
-    }
+    // const { dispatch, floors } = this.props
   }
 
   componentWillMount () {
@@ -31,6 +23,19 @@ class App extends Component {
   }
 
   render () {
+    const { dispatch, floors } = this.props
+    window.globs = {
+      addLift: () => {
+        dispatch(addLift())
+      },
+      addFloor: () => {
+        dispatch(addFloor())
+      },
+      toggleCall: (floor) => {
+        dispatch(toggleCall(floor))
+      },
+      checkButtonInFloor: (floor) => (floor - 1 < floors.length) ? floors[floor - 1].calling : () => {}
+    }
     const time = Date.now()
     return (
       <div>
@@ -41,11 +46,17 @@ class App extends Component {
 }
 
 App.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  lifts: PropTypes.array.isRequired,
+  floors: PropTypes.array.isRequired
 }
 
 function mapStateToProps (state) {
-  return state
+  const { lifts, floors } = state
+  return {
+    lifts,
+    floors
+  }
 }
 
 export default connect(mapStateToProps)(App)
