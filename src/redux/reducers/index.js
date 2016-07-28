@@ -8,11 +8,11 @@ import {
   ElevatorStatus
 } from '../actions'
 
-const FLOOR_INITIAL_STATE = {
+export const FLOOR_INITIAL_STATE = {
   calling: false
 }
 
-const LIFT_INITIAL_STATE = {
+export const LIFT_INITIAL_STATE = {
   position: 0,
   state: ElevatorStatus.FREE,
   target: 0
@@ -49,8 +49,8 @@ function liftReducers (state = [LIFT_INITIAL_STATE, LIFT_INITIAL_STATE], action)
 }
 
 const rootReducer = combineReducers({
-  floorReducers,
-  liftReducers
+  floors: floorReducers,
+  lifts: liftReducers
 })
 
 export default rootReducer

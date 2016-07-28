@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import {
-  addLift
+  addLift,
+  addFloor
 } from '../../redux/actions'
 
 class App extends Component {
