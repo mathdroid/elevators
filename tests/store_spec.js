@@ -1,7 +1,7 @@
+/* global describe, it */
 import { expect } from 'chai'
-import rootReducer, {LIFT_INITIAL_STATE, FLOOR_INITIAL_STATE} from '../src/redux/reducers'
-import { createStore, applyMiddleware } from 'redux'
-
+import rootReducer from '../src/redux/reducers'
+import { createStore } from 'redux'
 
 describe('Store', () => {
   it('is a Redux store with right initialization and handles ADD_LIFT and ADD_FLOOR', () => {

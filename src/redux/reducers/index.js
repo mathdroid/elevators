@@ -22,8 +22,8 @@ function floorReducers (state = [FLOOR_INITIAL_STATE, FLOOR_INITIAL_STATE], acti
   switch (action.type) {
     case TOGGLE_CALL:
       return [
-        ...state.slice(0, action.floorNum-1),
-        {calling: !state[action.floorNum-1].calling},
+        ...state.slice(0, action.floorNum - 1),
+        {calling: !state[action.floorNum - 1].calling},
         ...state.slice(action.floorNum)
       ]
     case ADD_FLOOR:
@@ -42,6 +42,12 @@ function liftReducers (state = [LIFT_INITIAL_STATE, LIFT_INITIAL_STATE], action)
       return [
         ...state,
         LIFT_INITIAL_STATE
+      ]
+    case SET_ELEVATOR_STATUS:
+      return [
+        ...state.slice(0, action.elevatorId - 1),
+        Object.assign({}, state[action.elevatorId - 1], {state: action.status}),
+        ...state.slice(action.elevatorId)
       ]
     default:
       return state

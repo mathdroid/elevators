@@ -33,6 +33,6 @@ export function toggleCall (floorNum) {
   return { type: TOGGLE_CALL, floorNum }
 }
 
-export function setElevatorStatus (status) {
-  return { type: SET_ELEVATOR_STATUS, status }
+export function setElevatorStatus (elevatorId, status) {
+  return { type: SET_ELEVATOR_STATUS, elevatorId, status }
 }

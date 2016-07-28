@@ -11,14 +11,17 @@ class App extends Component {
   //   super(props)
   // }
 
-  componentDidMount() {
+  componentDidMount () {
     const { dispatch } = this.props
 
     window.globs = {
-        addLift: () => {
-          dispatch(addLift())
-        },
-    };
+      addLift: () => {
+        dispatch(addLift())
+      },
+      addFloor: () => {
+        dispatch(addFloor())
+      }
+    }
   }
 
   componentWillMount () {
@@ -40,7 +43,6 @@ class App extends Component {
 App.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
-
 
 function mapStateToProps (state) {
   return state

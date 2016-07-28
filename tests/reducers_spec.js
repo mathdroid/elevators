@@ -1,3 +1,4 @@
+/* global describe, it */
 import { expect } from 'chai'
 
 import rootReducer from '../src/redux/reducers'
