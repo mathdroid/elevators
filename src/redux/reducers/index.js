@@ -3,11 +3,19 @@ import { combineReducers } from 'redux'
 import {
   ADD_FLOOR,
   TOGGLE_CALL,
-  SET_ELEVATOR_STATUS
+  SET_ELEVATOR_STATUS,
+  ADD_LIFT,
+  ElevatorStatus
 } from '../actions'
 
 const FLOOR_INITIAL_STATE = {
   calling: false
+}
+
+const LIFT_INITIAL_STATE = {
+  position: 0,
+  state: ElevatorStatus.FREE,
+  target: 0
 }
 
 function floorReducers (state = [FLOOR_INITIAL_STATE, FLOOR_INITIAL_STATE], action) {
@@ -28,4 +36,21 @@ function floorReducers (state = [FLOOR_INITIAL_STATE, FLOOR_INITIAL_STATE], acti
   }
 }
 
-export default floorReducers
+function liftReducers (state = [LIFT_INITIAL_STATE, LIFT_INITIAL_STATE], action) {
+  switch (action.type) {
+    case ADD_LIFT:
+      return [
+        ...state,
+        LIFT_INITIAL_STATE
+      ]
+    default:
+      return state
+  }
+}
+
+const rootReducer = combineReducers({
+  floorReducers,
+  liftReducers
+})
+
+export default rootReducer

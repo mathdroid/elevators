@@ -1,12 +1,26 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-export default class App extends Component {
+import {
+  addLift
+} from '../../redux/actions'
+
+class App extends Component {
   // constructor (props) {
   //   super(props)
   // }
 
-  componentDidMount () {
+  componentDidMount() {
+    const { dispatch } = this.props
+
+    window.globs = {
+        addLift: () => {
+          dispatch(addLift())
+        },
+    };
+  }
+
+  componentWillMount () {
   }
 
   componentWillReceiveProps (nextProps) {
@@ -23,8 +37,12 @@ export default class App extends Component {
 }
 
 App.propTypes = {
+  dispatch: PropTypes.func.isRequired
 }
 
+
 function mapStateToProps (state) {
-  return {}
+  return state
 }
+
+export default connect(mapStateToProps)(App)
