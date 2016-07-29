@@ -4,13 +4,18 @@ import { connect } from 'react-redux'
 import {
   addLift,
   addFloor,
-  toggleCall
+  toggleCall,
+  toggleCallIfNeeded
 } from '../../redux/actions'
 
+import Floors from './Floors'
+import Lifts from './Lifts'
+
 class App extends Component {
-  // constructor (props) {
-  //   super(props)
-  // }
+  constructor (props) {
+    super(props)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
+  }
 
   componentDidMount () {
     // const { dispatch, floors } = this.props
@@ -22,8 +27,12 @@ class App extends Component {
   componentWillReceiveProps (nextProps) {
   }
 
+  handleButtonClick (floor) {
+    this.props.dispatch(toggleCallIfNeeded(floor))
+  }
+
   render () {
-    const { dispatch, floors } = this.props
+    const { dispatch, floors, lifts } = this.props
     window.globs = {
       addLift: () => {
         dispatch(addLift())
@@ -34,12 +43,17 @@ class App extends Component {
       toggleCall: (floor) => {
         dispatch(toggleCall(floor))
       },
-      checkButtonInFloor: (floor) => (floor - 1 < floors.length) ? floors[floor - 1].calling : () => {}
+      checkButtonInFloor: (floor) => (floor - 1 < floors.length) ? floors[floor - 1].calling : () => {},
+      toggleCallIfNeeded: (floor) => {
+        dispatch(toggleCallIfNeeded(floor))
+      }
     }
-    const time = Date.now()
     return (
       <div>
-        It is {time}
+        It is {new Date().toLocaleTimeString()}.
+        <Floors floors={floors}
+          onClick={this.handleButtonClick} />
+        <Lifts lifts={lifts} />
       </div>
     )
   }

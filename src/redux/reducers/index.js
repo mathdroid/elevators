@@ -3,50 +3,71 @@ import { combineReducers } from 'redux'
 import {
   ADD_FLOOR,
   TOGGLE_CALL,
+  TOGGLE_ANSWER,
   SET_ELEVATOR_STATUS,
+  SET_ELEVATOR_POSITION,
   ADD_LIFT,
   ElevatorStatus
 } from '../actions'
 
 export const FLOOR_INITIAL_STATE = {
-  calling: false
+  isCalling: false,
+  isAnswered: false
 }
 
 export const LIFT_INITIAL_STATE = {
-  position: 0,
+  position: 1,
   state: ElevatorStatus.FREE,
-  target: 0
+  target: 1
 }
 
-function floorReducers (state = [FLOOR_INITIAL_STATE, FLOOR_INITIAL_STATE], action) {
+function floorReducers (state = [
+  Object.assign({}, FLOOR_INITIAL_STATE, {floorNum: 1}),
+  Object.assign({}, FLOOR_INITIAL_STATE, {floorNum: 2})
+], action) {
   switch (action.type) {
     case TOGGLE_CALL:
       return [
         ...state.slice(0, action.floorNum - 1),
-        {calling: !state[action.floorNum - 1].calling},
+        Object.assign({}, state[action.floorNum - 1], {isCalling: !state[action.floorNum - 1].isCalling}),
+        ...state.slice(action.floorNum)
+      ]
+    case TOGGLE_ANSWER:
+      return [
+        ...state.slice(0, action.floorNum - 1),
+        Object.assign({}, state[action.floorNum - 1], {isAnswered: !state[action.floorNum - 1].isAnswered}),
         ...state.slice(action.floorNum)
       ]
     case ADD_FLOOR:
       return [
         ...state,
-        FLOOR_INITIAL_STATE
+        Object.assign({}, FLOOR_INITIAL_STATE, {floorNum: state.length + 1})
       ]
     default:
       return state
   }
 }
 
-function liftReducers (state = [LIFT_INITIAL_STATE, LIFT_INITIAL_STATE], action) {
+function liftReducers (state = [
+  Object.assign({}, LIFT_INITIAL_STATE, {elevatorId: 1}),
+  Object.assign({}, LIFT_INITIAL_STATE, {elevatorId: 2})
+], action) {
   switch (action.type) {
     case ADD_LIFT:
       return [
         ...state,
-        LIFT_INITIAL_STATE
+        Object.assign({}, LIFT_INITIAL_STATE, {elevatorId: state.length + 1})
       ]
     case SET_ELEVATOR_STATUS:
       return [
         ...state.slice(0, action.elevatorId - 1),
-        Object.assign({}, state[action.elevatorId - 1], {state: action.status}),
+        Object.assign({}, state[action.elevatorId - 1], {state: action.status, target: action.target}),
+        ...state.slice(action.elevatorId)
+      ]
+    case SET_ELEVATOR_POSITION:
+      return [
+        ...state.slice(0, action.elevatorId - 1),
+        Object.assign({}, state[action.elevatorId - 1], {position: action.floorNum}),
         ...state.slice(action.elevatorId)
       ]
     default:
