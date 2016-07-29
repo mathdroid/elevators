@@ -19,3 +19,26 @@
 - `$ npm run test` -- single test
 
 - `$ npm run watch` -- test watcher
+
+## Globals
+
+There are two methods which are declared globally in <App />, which are exposed in `window.controls` object.
+
+```js
+window.controls = {
+  checkButtonInFloor: (Number) => Boolean,
+  activateButton: (Number) => undefined
+  }
+}
+
+```
+
+1. `checkButtonInFloor(floor)` will give you the status of the button in a specific `floor`. Returns `true` if it is activated.
+
+2. `activateButton(floor)` will try to activate the button on the `floor`. Validity handling is internally checked.
+
+### Usage
+
+1. Open browser console
+
+2. `controls.checkButtonInFloor(floor)` or `controls.activateButton(floor)`

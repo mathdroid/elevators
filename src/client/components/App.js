@@ -33,26 +33,27 @@ class App extends Component {
 
   render () {
     const { dispatch, floors, lifts } = this.props
-    window.globs = {
-      addLift: () => {
-        dispatch(addLift())
-      },
-      addFloor: () => {
-        dispatch(addFloor())
-      },
-      toggleCall: (floor) => {
-        dispatch(toggleCall(floor))
-      },
+    window.controls = {
       checkButtonInFloor: (floor) => (floor - 1 < floors.length) ? floors[floor - 1].calling : () => {},
-      toggleCallIfNeeded: (floor) => {
+      activateButton: (floor) => {
         dispatch(toggleCallIfNeeded(floor))
       }
     }
     return (
       <div>
         It is {new Date().toLocaleTimeString()}.
+        <button onClick={() => {
+            dispatch(addFloor())
+          }}>
+          Add Floor
+        </button>
         <Floors floors={floors}
           onClick={this.handleButtonClick} />
+        <button onClick={() => {
+            dispatch(addLift())
+          }}>
+          Add Lift
+        </button>
         <Lifts lifts={lifts} />
       </div>
     )

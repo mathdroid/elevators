@@ -12,7 +12,7 @@ export default class Floors extends Component {
           <li key={floors.length - floor.floorNum}>
             <button onClick={() => {
               onClick(floor.floorNum)
-            }} disabled={floor.isCalling}>CALL</button> {`Floor ${floor.floorNum}: ${floor.isCalling ? 'CALLING AN ELEVATOR' : 'IDLING'}`}
+            }} disabled={floor.isCalling}>CALL</button> {`Floor ${floor.floorNum}: ${floor.state}`}
           </li>
         )}
       </ul>

@@ -6,6 +6,7 @@ export const ADD_FLOOR = 'ADD_FLOOR'
 export const ADD_LIFT = 'ADD_LIFT'
 export const TOGGLE_CALL = 'TOGGLE_CALL'
 export const TOGGLE_ANSWER = 'TOGGLE_ANSWER'
+export const SET_FLOOR_STATUS = 'SET_FLOOR_STATUS'
 export const SET_ELEVATOR_STATUS = 'SET_ELEVATOR_STATUS'
 export const SET_ELEVATOR_POSITION = 'SET_ELEVATOR_POSITION'
 
@@ -64,7 +65,7 @@ export function callFreeElevatorTo (floorNum) {
   return (dispatch, getState) => {
     // the floor is calling!
     dispatch(toggleCall(floorNum))
-
+    dispatch(setFloorStatus(floorNum, 'SEARCHING FOR ELEVATOR.'))
     // get free lifts and work from these
     const freeLift = getState().lifts.filter((lift, index) => {
       return lift.state === ElevatorStatus.FREE
@@ -78,6 +79,7 @@ export function callFreeElevatorTo (floorNum) {
     // console.log(freeLift)
     if (freeLift.elevatorId > 0) {
       dispatch(toggleAnswer(floorNum))
+      dispatch(setFloorStatus(floorNum, `WAITING FOR ELEVATOR ${freeLift.elevatorId}.`))
       dispatch(setElevatorStatus(freeLift.elevatorId, ElevatorStatus.MOVING, floorNum))
       return dispatch(moveElevatorTo(freeLift.elevatorId, floorNum))
     } else {
@@ -93,9 +95,11 @@ function moveElevatorTo (elevatorId, floorNum) {
     const curPos = lifts[elevatorId - 1].position
     if (curPos === floorNum) {
       dispatch(setElevatorStatus(elevatorId, ElevatorStatus.STAYING))
+      dispatch(setFloorStatus(floorNum, `ELEVATOR ${elevatorId} IS HERE FOR 3 SECONDS.`))
       dispatch(toggleCall(floorNum))
       setTimeout(() => {
         dispatch(toggleAnswer(floorNum))
+        dispatch(setFloorStatus(floorNum, `IDLING.`))
         dispatch(setElevatorStatus(elevatorId, ElevatorStatus.FREE))
         dispatch(findWaitingFloor(elevatorId, curPos))
       }, 3000)
@@ -122,12 +126,17 @@ function findWaitingFloor (elevatorId, curPos) {
     }, {floorNum: Number.MAX_SAFE_INTEGER})
     if (closestWaitingFloor.floorNum < Number.MAX_SAFE_INTEGER) {
       dispatch(toggleAnswer(closestWaitingFloor.floorNum))
+      dispatch(setFloorStatus(closestWaitingFloor.floorNum, `WAITING FOR ELEVATOR ${elevatorId}.`))
       dispatch(setElevatorStatus(elevatorId, ElevatorStatus.MOVING, closestWaitingFloor.floorNum))
       return dispatch(moveElevatorTo(elevatorId, closestWaitingFloor.floorNum))
     } else {
       return Promise.resolve()
     }
   }
+}
+
+export function setFloorStatus (floorNum, status) {
+  return { type: SET_FLOOR_STATUS, floorNum, status }
 }
 
 export function setElevatorStatus (elevatorId, status, target) {

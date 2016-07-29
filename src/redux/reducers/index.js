@@ -4,6 +4,7 @@ import {
   ADD_FLOOR,
   TOGGLE_CALL,
   TOGGLE_ANSWER,
+  SET_FLOOR_STATUS,
   SET_ELEVATOR_STATUS,
   SET_ELEVATOR_POSITION,
   ADD_LIFT,
@@ -12,7 +13,8 @@ import {
 
 export const FLOOR_INITIAL_STATE = {
   isCalling: false,
-  isAnswered: false
+  isAnswered: false,
+  state: 'IDLING'
 }
 
 export const LIFT_INITIAL_STATE = {
@@ -42,6 +44,12 @@ function floorReducers (state = [
       return [
         ...state,
         Object.assign({}, FLOOR_INITIAL_STATE, {floorNum: state.length + 1})
+      ]
+    case SET_FLOOR_STATUS:
+      return [
+        ...state.slice(0, action.floorNum - 1),
+        Object.assign({}, state[action.floorNum - 1], {state: action.status}),
+        ...state.slice(action.floorNum)
       ]
     default:
       return state
