@@ -1,7 +1,7 @@
 {
-  "name": "elevator",
+  "name": "elevators",
   "version": "0.1.0",
-  "description": "Elevator demo",
+  "description": "A program that simulates freight lifts in React and Redux.",
   "babel": {
     "presets": [
       "es2015"
