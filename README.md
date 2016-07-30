@@ -14,6 +14,8 @@
 
 3. `$ npm start`
 
+==> 🌎 Open `localhost:7248`
+
 ## Testing
 
 - `$ npm run test` -- single test
@@ -22,13 +24,12 @@
 
 ## Globals
 
-There are two methods which are declared globally in <App />, which are exposed in `window.controls` object.
+> There are two methods which are declared globally in `<App />`, which are exposed in `window.controls` object.
 
 ```js
 window.controls = {
   checkButtonInFloor: (Number) => Boolean,
   activateButton: (Number) => undefined
-  }
 }
 
 ```
