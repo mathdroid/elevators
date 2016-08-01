@@ -18,10 +18,17 @@ class App extends Component {
   }
 
   componentDidMount () {
-    // const { dispatch, floors } = this.props
+
   }
 
   componentWillMount () {
+    const { dispatch } = this.props
+    window.controls = {
+      checkButtonInFloor: (floor) => (this.props.floors[floor - 1]) ? this.props.floors[floor - 1].isCalling : () => {},
+      activateButton: (floor) => {
+        dispatch(toggleCallIfNeeded(floor))
+      }
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -33,12 +40,6 @@ class App extends Component {
 
   render () {
     const { dispatch, floors, lifts } = this.props
-    window.controls = {
-      checkButtonInFloor: (floor) => (floor - 1 < floors.length) ? floors[floor - 1].calling : () => {},
-      activateButton: (floor) => {
-        dispatch(toggleCallIfNeeded(floor))
-      }
-    }
     return (
       <div>
         It is {new Date().toLocaleTimeString()}.
