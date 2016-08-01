@@ -4,23 +4,32 @@ export default class Floors extends Component {
 
   render () {
     const floors = [].concat(this.props.floors)
-    const { onClick } = this.props
+    const { onClick, addFloor, toggleCallIfNeeded } = this.props
 
     return (
-      <ul>
-        {floors.map((floor, i) =>
-          <li key={i}>
-            <button onClick={() => {
-              onClick(floor.floorNum)
-            }} disabled={floor.isCalling}>CALL</button> {`Floor ${floor.floorNum}: ${floor.state}`}
-          </li>
-        )}
-      </ul>
+      <div>
+        <button onClick={() => {
+            addFloor()
+          }}>
+          Add Floor
+        </button>
+        <ul>
+          {floors.map((floor, i) =>
+            <li key={i}>
+              <button onClick={() => {
+                toggleCallIfNeeded(floor.floorNum)
+              }} disabled={floor.isCalling}>CALL</button> {`Floor ${floor.floorNum}: ${floor.state}`}
+            </li>
+          )}
+        </ul>
+      </div>
     )
   }
 }
 
 Floors.propTypes = {
   floors: PropTypes.array.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  addLift: PropTypes.func.isRequired,
+  toggleCallIfNeeded: PropTypes.func.isRequired
 }

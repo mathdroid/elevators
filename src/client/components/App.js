@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import {
-  addLift,
-  addFloor,
-  toggleCall,
-  toggleCallIfNeeded
-} from '../../redux/actions'
+import * as AppActionCreators from './AppActionCreators'
+
+// import {
+//   toggleCallIfNeeded
+// } from '../../redux/actions'
 
 import Floors from './Floors'
 import Lifts from './Lifts'
@@ -14,7 +14,6 @@ import Lifts from './Lifts'
 class App extends Component {
   constructor (props) {
     super(props)
-    this.handleButtonClick = this.handleButtonClick.bind(this)
   }
 
   componentDidMount () {
@@ -22,7 +21,8 @@ class App extends Component {
     window.controls = {
       checkButtonInFloor: (floor) => (this.props.floors[floor - 1]) ? this.props.floors[floor - 1].isCalling : () => {},
       activateButton: (floor) => {
-        dispatch(toggleCallIfNeeded(floor))
+        let action = AppActionCreators.toggleCallIfNeeded(floor)
+        dispatch(action)
       }
     }
   }
@@ -34,28 +34,19 @@ class App extends Component {
   componentWillReceiveProps (nextProps) {
   }
 
-  handleButtonClick (floor) {
-    this.props.dispatch(toggleCallIfNeeded(floor))
-  }
+
 
   render () {
     const { dispatch, floors, lifts } = this.props
+    let boundActionCreators = bindActionCreators(AppActionCreators, dispatch)
+    console.log(boundActionCreators)
     return (
       <div>
         It is {new Date().toLocaleTimeString()}.
-        <button onClick={() => {
-            dispatch(addFloor())
-          }}>
-          Add Floor
-        </button>
-        <Floors floors={floors}
-          onClick={this.handleButtonClick} />
-        <button onClick={() => {
-            dispatch(addLift())
-          }}>
-          Add Lift
-        </button>
-        <Lifts lifts={lifts} />
+
+        <Floors {...boundActionCreators} floors={floors} />
+
+        <Lifts lifts={lifts} {...boundActionCreators}/>
       </div>
     )
   }
