@@ -17,15 +17,23 @@ export const FLOOR_INITIAL_STATE = {
   state: 'IDLING'
 }
 
+function newFloor (floorNum) {
+  return Object.assign({}, FLOOR_INITIAL_STATE, {floorNum})
+}
+
 export const LIFT_INITIAL_STATE = {
   position: 1,
   state: ElevatorStatus.FREE,
   target: 1
 }
 
+function newElevator (elevatorId) {
+  return Object.assign({}, LIFT_INITIAL_STATE, {elevatorId})
+}
+
 function floorReducers (state = [
-  Object.assign({}, FLOOR_INITIAL_STATE, {floorNum: 1}),
-  Object.assign({}, FLOOR_INITIAL_STATE, {floorNum: 2})
+  newFloor(1),
+  newFloor(2)
 ], action) {
   switch (action.type) {
     case TOGGLE_CALL:
@@ -43,7 +51,7 @@ function floorReducers (state = [
     case ADD_FLOOR:
       return [
         ...state,
-        Object.assign({}, FLOOR_INITIAL_STATE, {floorNum: state.length + 1})
+        newFloor(state.length + 1)
       ]
     case SET_FLOOR_STATUS:
       return [
@@ -57,14 +65,14 @@ function floorReducers (state = [
 }
 
 function liftReducers (state = [
-  Object.assign({}, LIFT_INITIAL_STATE, {elevatorId: 1}),
-  Object.assign({}, LIFT_INITIAL_STATE, {elevatorId: 2})
+  newElevator(1),
+  newElevator(2)
 ], action) {
   switch (action.type) {
     case ADD_LIFT:
       return [
         ...state,
-        Object.assign({}, LIFT_INITIAL_STATE, {elevatorId: state.length + 1})
+        newElevator(state.length + 1)
       ]
     case SET_ELEVATOR_STATUS:
       return [

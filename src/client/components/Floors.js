@@ -8,8 +8,8 @@ export default class Floors extends Component {
 
     return (
       <ul>
-        {floors.sort((a, b) => b.floorNum - a.floorNum).map((floor, i) =>
-          <li key={floors.length - floor.floorNum}>
+        {floors.map((floor, i) =>
+          <li key={i}>
             <button onClick={() => {
               onClick(floor.floorNum)
             }} disabled={floor.isCalling}>CALL</button> {`Floor ${floor.floorNum}: ${floor.state}`}
