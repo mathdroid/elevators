@@ -18,10 +18,6 @@ class App extends Component {
   }
 
   componentDidMount () {
-
-  }
-
-  componentWillMount () {
     const { dispatch } = this.props
     window.controls = {
       checkButtonInFloor: (floor) => (this.props.floors[floor - 1]) ? this.props.floors[floor - 1].isCalling : () => {},
@@ -29,6 +25,10 @@ class App extends Component {
         dispatch(toggleCallIfNeeded(floor))
       }
     }
+  }
+
+  componentWillMount () {
+
   }
 
   componentWillReceiveProps (nextProps) {
