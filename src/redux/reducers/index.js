@@ -32,32 +32,32 @@ function newElevator (elevatorId) {
 }
 
 function floorReducers (state = [
-  newFloor(1),
-  newFloor(2)
+  newFloor(2),
+  newFloor(1)
 ], action) {
   switch (action.type) {
     case TOGGLE_CALL:
       return [
-        ...state.slice(0, action.floorNum - 1),
-        Object.assign({}, state[action.floorNum - 1], {isCalling: !state[action.floorNum - 1].isCalling}),
-        ...state.slice(action.floorNum)
+        ...state.slice(0, state.length - action.floorNum),
+        Object.assign({}, state[state.length - action.floorNum], {isCalling: !state[state.length - action.floorNum].isCalling}),
+        ...state.slice(state.length - action.floorNum + 1)
       ]
     case TOGGLE_ANSWER:
       return [
-        ...state.slice(0, action.floorNum - 1),
-        Object.assign({}, state[action.floorNum - 1], {isAnswered: !state[action.floorNum - 1].isAnswered}),
-        ...state.slice(action.floorNum)
+        ...state.slice(0, state.length - action.floorNum),
+        Object.assign({}, state[state.length - action.floorNum], {isAnswered: !state[state.length - action.floorNum].isAnswered}),
+        ...state.slice(state.length - action.floorNum + 1)
       ]
     case ADD_FLOOR:
       return [
-        ...state,
-        newFloor(state.length + 1)
+        newFloor(state.length + 1),
+        ...state
       ]
     case SET_FLOOR_STATUS:
       return [
-        ...state.slice(0, action.floorNum - 1),
-        Object.assign({}, state[action.floorNum - 1], {state: action.status}),
-        ...state.slice(action.floorNum)
+        ...state.slice(0, state.length - action.floorNum),
+        Object.assign({}, state[state.length - action.floorNum], {state: action.status}),
+        ...state.slice(state.length - action.floorNum + 1)
       ]
     default:
       return state

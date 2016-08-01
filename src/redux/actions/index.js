@@ -43,7 +43,7 @@ export function toggleAnswer (floorNum) {
 function shouldToggleCall (state, floorNum) {
   const floors = state.floors
   const stayingLifts = state.lifts.filter((lift, index) => (lift.position === floorNum) && (lift.state === ElevatorStatus.STAYING))
-  if (stayingLifts.length === 0 && !floors[floorNum - 1].isCalling) {
+  if (stayingLifts.length === 0 && !floors[floors.length - floorNum].isCalling) {
     return true
   } else {
     return false
