@@ -132,6 +132,4 @@ describe('redux/reducers', () => {
     expect(nextState).to.have.property('lifts').that.deep.equals(liftsExpectation)
     expect(nextState).to.have.property('floors').with.deep.property(`[${nextState.floors.length - floorStatusAction.floorNum}].state`).to.equal(floorStatusAction.status)
   })
-
-
 })

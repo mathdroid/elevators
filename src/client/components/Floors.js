@@ -4,13 +4,13 @@ export default class Floors extends Component {
 
   render () {
     const floors = [].concat(this.props.floors)
-    const { onClick, addFloor, toggleCallIfNeeded } = this.props
+    const { addFloor, toggleCallIfNeeded } = this.props
 
     return (
       <div>
         <button onClick={() => {
-            addFloor()
-          }}>
+          addFloor()
+        }}>
           Add Floor
         </button>
         <ul>

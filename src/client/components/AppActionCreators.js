@@ -27,10 +27,9 @@ export function toggleAnswer (floorNum) {
   return { type: 'TOGGLE_ANSWER', floorNum }
 }
 
-
 function shouldToggleCall (state, floorNum) {
   const floors = state.floors
-  const stayingLifts = state.lifts.filter((lift, index) => (lift.position === floorNum) && (lift.state === ElevatorStatus.STAYING))
+  const stayingLifts = state.lifts.filter((lift, index) => (lift.position === floorNum) && (lift.state === 'STAYING'))
   if (stayingLifts.length === 0 && !floors[floors.length - floorNum].isCalling) {
     return true
   } else {
@@ -87,7 +86,7 @@ function moveElevatorTo (elevatorId, floorNum) {
       dispatch(toggleCall(floorNum))
       setTimeout(() => {
         dispatch(toggleAnswer(floorNum))
-        dispatch(setFloorStatus(floorNum, `IDLING.`))
+        dispatch(setFloorStatus(floorNum, 'IDLING.'))
         dispatch(setElevatorStatus(elevatorId, 'FREE'))
         dispatch(findWaitingFloor(elevatorId, curPos))
       }, 3000)

@@ -92,7 +92,6 @@ export function callFreeElevatorTo (floorNum) {
 }
 
 function moveElevatorTo (elevatorId, floorNum) {
-
   return (dispatch, getState) => {
     const lifts = [].concat(getState().lifts)
     const curPos = lifts[elevatorId - 1].position
@@ -104,7 +103,7 @@ function moveElevatorTo (elevatorId, floorNum) {
       // ARRIVING LIFTS ONLY STAY FOR 3 SECONDS.
       setTimeout(() => {
         dispatch(toggleAnswer(floorNum))
-        dispatch(setFloorStatus(floorNum, `IDLING.`))
+        dispatch(setFloorStatus(floorNum, 'IDLING.'))
         dispatch(setElevatorStatus(elevatorId, ElevatorStatus.FREE))
         dispatch(findWaitingFloor(elevatorId, curPos))
       }, 3000)

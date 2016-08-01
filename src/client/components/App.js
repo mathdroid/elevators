@@ -12,9 +12,6 @@ import Floors from './Floors'
 import Lifts from './Lifts'
 
 class App extends Component {
-  constructor (props) {
-    super(props)
-  }
 
   componentDidMount () {
     const { dispatch } = this.props
@@ -34,8 +31,6 @@ class App extends Component {
   componentWillReceiveProps (nextProps) {
   }
 
-
-
   render () {
     const { dispatch, floors, lifts } = this.props
     let boundActionCreators = bindActionCreators(AppActionCreators, dispatch)
@@ -45,7 +40,7 @@ class App extends Component {
 
         <Floors {...boundActionCreators} floors={floors} />
 
-        <Lifts lifts={lifts} {...boundActionCreators}/>
+        <Lifts lifts={lifts} {...boundActionCreators} />
       </div>
     )
   }

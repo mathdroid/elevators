@@ -8,8 +8,8 @@ export default class Lifts extends Component {
     return (
       <div>
         <button onClick={() => {
-            addLift()
-          }}>
+          addLift()
+        }}>
           Add Lift
         </button>
         <ul>
