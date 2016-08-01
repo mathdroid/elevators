@@ -17,7 +17,7 @@ export const FLOOR_INITIAL_STATE = {
   state: 'IDLING'
 }
 
-function newFloor (floorNum) {
+export function newFloor (floorNum) {
   return Object.assign({}, FLOOR_INITIAL_STATE, {floorNum})
 }
 
@@ -27,7 +27,7 @@ export const LIFT_INITIAL_STATE = {
   target: 1
 }
 
-function newElevator (elevatorId) {
+export function newElevator (elevatorId) {
   return Object.assign({}, LIFT_INITIAL_STATE, {elevatorId})
 }
 
