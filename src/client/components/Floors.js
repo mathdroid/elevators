@@ -29,7 +29,6 @@ export default class Floors extends Component {
 
 Floors.propTypes = {
   floors: PropTypes.array.isRequired,
-  onClick: PropTypes.func.isRequired,
   addLift: PropTypes.func.isRequired,
   toggleCallIfNeeded: PropTypes.func.isRequired
 }

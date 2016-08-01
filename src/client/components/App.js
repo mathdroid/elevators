@@ -39,7 +39,6 @@ class App extends Component {
   render () {
     const { dispatch, floors, lifts } = this.props
     let boundActionCreators = bindActionCreators(AppActionCreators, dispatch)
-    console.log(boundActionCreators)
     return (
       <div>
         It is {new Date().toLocaleTimeString()}.

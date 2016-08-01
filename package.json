@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --compilers js:babel-core/register 'tests/**/*.@(js|jsx)'",
+    "test": "mocha --compilers js:babel-core/register 'src/**/*.test.@(js|jsx)'",
     "watch": "npm run test -- --watch"
   },
   "author": "Muhammad Mustadi <muhammad.mustadi@gmail.com> (http://mustadi.xyz)",
@@ -36,6 +36,7 @@
     "express": "^4.14.0",
     "mocha": "^2.5.3",
     "node-libs-browser": "^0.5.2",
+    "redux-mock-store": "^1.1.2",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.9.1"

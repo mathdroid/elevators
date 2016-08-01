@@ -42,6 +42,7 @@ export function toggleAnswer (floorNum) {
 
 function shouldToggleCall (state, floorNum) {
   const floors = state.floors
+  // Filter lifts which are STAYING in floorNum. If such a lift exists, toggle call IF the floor is not calling already.
   const stayingLifts = state.lifts.filter((lift, index) => (lift.position === floorNum) && (lift.state === ElevatorStatus.STAYING))
   if (stayingLifts.length === 0 && !floors[floors.length - floorNum].isCalling) {
     return true
@@ -66,7 +67,8 @@ export function callFreeElevatorTo (floorNum) {
     // the floor is calling!
     dispatch(toggleCall(floorNum))
     dispatch(setFloorStatus(floorNum, 'SEARCHING FOR ELEVATOR.'))
-    // get free lifts and work from these
+
+    // REDUCE the lifts to one single lift which is free, and CLOSEST to calling floor.
     const freeLift = getState().lifts.filter((lift, index) => {
       return lift.state === ElevatorStatus.FREE
     }).reduce((previous, current) => {
@@ -76,7 +78,8 @@ export function callFreeElevatorTo (floorNum) {
         return previous
       }
     }, {position: Number.MAX_SAFE_INTEGER, elevatorId: 0})
-    // console.log(freeLift)
+
+    // If free lift exists, operate it.
     if (freeLift.elevatorId > 0) {
       dispatch(toggleAnswer(floorNum))
       dispatch(setFloorStatus(floorNum, `WAITING FOR ELEVATOR ${freeLift.elevatorId}.`))
@@ -89,14 +92,16 @@ export function callFreeElevatorTo (floorNum) {
 }
 
 function moveElevatorTo (elevatorId, floorNum) {
-  // console.log(`moving elevator ${elevatorId} to ${floorNum}`)
+
   return (dispatch, getState) => {
     const lifts = [].concat(getState().lifts)
     const curPos = lifts[elevatorId - 1].position
     if (curPos === floorNum) {
+      // ARRIVING
       dispatch(setElevatorStatus(elevatorId, ElevatorStatus.STAYING))
       dispatch(setFloorStatus(floorNum, `ELEVATOR ${elevatorId} IS HERE FOR 3 SECONDS.`))
       dispatch(toggleCall(floorNum))
+      // ARRIVING LIFTS ONLY STAY FOR 3 SECONDS.
       setTimeout(() => {
         dispatch(toggleAnswer(floorNum))
         dispatch(setFloorStatus(floorNum, `IDLING.`))
@@ -104,17 +109,22 @@ function moveElevatorTo (elevatorId, floorNum) {
         dispatch(findWaitingFloor(elevatorId, curPos))
       }, 3000)
     } else {
+      // MOVING LIFTS WILL UPDATE POS EVERY 1 SEC
       setTimeout(() => {
         dispatch(setElevatorPosition(elevatorId, (curPos < floorNum) ? curPos + 1 : curPos - 1))
         dispatch(moveElevatorTo(elevatorId, floorNum))
       }, 1000)
     }
+    return Promise.resolve()
   }
 }
 
 function findWaitingFloor (elevatorId, curPos) {
   return (dispatch, getState) => {
     const floors = getState().floors
+
+    // FILTER the floors to return only ones which isCalling and not isAnswered yet
+    // REDUCE the floors to one single floor which is closest to the lift.position
     const closestWaitingFloor = floors.filter((floor) => {
       return floor.isCalling && !floor.isAnswered
     }).reduce((previous, current) => {
@@ -124,6 +134,8 @@ function findWaitingFloor (elevatorId, curPos) {
         return previous
       }
     }, {floorNum: Number.MAX_SAFE_INTEGER})
+
+    // If such floor exists, move there
     if (closestWaitingFloor.floorNum < Number.MAX_SAFE_INTEGER) {
       dispatch(toggleAnswer(closestWaitingFloor.floorNum))
       dispatch(setFloorStatus(closestWaitingFloor.floorNum, `WAITING FOR ELEVATOR ${elevatorId}.`))
