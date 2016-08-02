@@ -37,7 +37,6 @@ describe('components/Lifts', () => {
     expect(enzymeWrapper.find('button').text()).toBe('Add Lift')
     expect(enzymeWrapper.find('ul').children().length).toEqual(2)
   })
-  
   it('should call addLift if button is pressed.', () => {
     const { enzymeWrapper, props } = setup()
     const button = enzymeWrapper.find('button')

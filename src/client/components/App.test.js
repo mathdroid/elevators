@@ -19,6 +19,10 @@ function setup () {
 }
 
 describe('components/App', () => {
-  it('should render self and subcomponents.')
+  it('should render self and subcomponents.', () => {
+    const { enzymeWrapper } = setup()
+    expect(enzymeWrapper.childAt(0).type()).toBe('h1')
+    expect(enzymeWrapper.children().length).toBe(3)
+  })
 
 })

@@ -36,7 +36,7 @@ export class App extends Component {
     let boundActionCreators = bindActionCreators(AppActionCreators, dispatch)
     return (
       <div>
-        It is {new Date().toLocaleTimeString()}.
+        <h1>It is {new Date().toLocaleTimeString()}.</h1>
 
         <Floors floors={floors} {...boundActionCreators} />
 

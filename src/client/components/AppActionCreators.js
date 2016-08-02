@@ -121,15 +121,3 @@ function findWaitingFloor (elevatorId, curPos) {
     }
   }
 }
-//
-// export function setFloorStatus (floorNum, status) {
-//   return { type: 'SET_FLOOR_STATUS', floorNum, status }
-// }
-//
-// export function setElevatorStatus (elevatorId, status, target) {
-//   return { type: 'SET_ELEVATOR_STATUS', elevatorId, status, target }
-// }
-//
-// export function setElevatorPosition (elevatorId, floorNum) {
-//   return { type: 'SET_ELEVATOR_POSITION', elevatorId, floorNum }
-// }

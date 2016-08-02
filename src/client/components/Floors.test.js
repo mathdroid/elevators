@@ -41,8 +41,8 @@ function setup () {
 describe('components/Floors', () => {
   it('should render self and subcomponents.', () => {
     const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find('div').childAt(0).type()).toBe('button')
-    expect(enzymeWrapper.find('div').childAt(0).text()).toBe('Add Floor')
+    expect(enzymeWrapper.childAt(0).type()).toBe('button')
+    expect(enzymeWrapper.childAt(0).text()).toBe('Add Floor')
     expect(enzymeWrapper.find('ul').children().length).toEqual(3)
     enzymeWrapper.find('ul').children().find('button').forEach(node => {
       expect(node.text()).toBe('CALL')
