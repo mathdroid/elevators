@@ -16,7 +16,9 @@ export class App extends Component {
   componentDidMount () {
     const { dispatch } = this.props
     window.controls = {
+      // returns floor.isCalling if floor exists, else returns undefined.
       checkButtonInFloor: (floor) => (this.props.floors[floor - 1]) ? this.props.floors[floor - 1].isCalling : () => {},
+
       activateButton: (floor) => {
         let action = AppActionCreators.toggleCallIfNeeded(floor)
         dispatch(action)
