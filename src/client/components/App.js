@@ -11,7 +11,7 @@ import * as AppActionCreators from './AppActionCreators'
 import Floors from './Floors'
 import Lifts from './Lifts'
 
-class App extends Component {
+export class App extends Component {
 
   componentDidMount () {
     const { dispatch } = this.props

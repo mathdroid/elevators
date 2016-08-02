@@ -7,15 +7,13 @@ export default class Lifts extends Component {
     const addLift = this.props.addLift
     return (
       <div>
-        <button onClick={() => {
-          addLift()
-        }}>
+        <button onClick={addLift}>
           Add Lift
         </button>
         <ul>
           {lifts.map((lift, i) =>
-            <li key={i}>
-              {`LIFT ${i + 1}: ${lift.state} in floor ${lift.position}${lift.state === 'MOVING' ? ', moving to floor ' + lift.target : '.'}`}
+            <li key={lift.elevatorId}>
+              {`LIFT ${lift.elevatorId}: ${lift.state} in floor ${lift.position}${lift.state === 'MOVING' ? ', moving to floor ' + lift.target : '.'}`}
             </li>
           )}
         </ul>
