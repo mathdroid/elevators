@@ -8,9 +8,7 @@ export default class Floors extends Component {
 
     return (
       <div>
-        <button onClick={() => {
-          addFloor()
-        }}>
+        <button onClick={addFloor}>
           Add Floor
         </button>
         <ul>
@@ -29,6 +27,6 @@ export default class Floors extends Component {
 
 Floors.propTypes = {
   floors: PropTypes.array.isRequired,
-  addLift: PropTypes.func.isRequired,
+  addFloor: PropTypes.func.isRequired,
   toggleCallIfNeeded: PropTypes.func.isRequired
 }

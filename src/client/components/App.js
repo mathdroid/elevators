@@ -38,7 +38,7 @@ export class App extends Component {
       <div>
         It is {new Date().toLocaleTimeString()}.
 
-        <Floors {...boundActionCreators} floors={floors} />
+        <Floors floors={floors} {...boundActionCreators} />
 
         <Lifts lifts={lifts} {...boundActionCreators} />
       </div>
